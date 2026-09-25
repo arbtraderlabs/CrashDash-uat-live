@@ -15,6 +15,21 @@ export function normaliseDashboard(payload) {
   return dashboard;
 }
 
+// A dashboard `details` entry is not necessarily a full instrument contract: it
+// may be a lightweight index reference (or an empty object) with no detail_path.
+// Feeding such a value to normaliseInstrumentDetail throws and takes the entire
+// list view down with it, so callers must be able to tell the two apart.
+// Per-instrument detail payloads are optional, so anything that is not a genuine
+// contract must fail closed to NOT_AVAILABLE rather than crash.
+export function isInstrumentContractPayload(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  if (value.web_schema === "WEB_V1") {
+    return Boolean(value.common && value.beginner && value.pro);
+  }
+  if (value.web_schema !== undefined) return false;
+  return Boolean(value.beginner && value.pro);
+}
+
 // WEB_V1 keeps large common fields once on the wire. Both view models reuse
 // them in memory; legacy backend/preview bundles retain their existing support.
 export function normaliseInstrumentDetail(detail, record = null) {

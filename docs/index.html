@@ -38,10 +38,15 @@
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 56px; padding: 0 1.25rem; border-bottom: 1px solid rgba(155, 168, 196, .18); background: rgba(11, 16, 32, .92); }
     .brand { display: flex; align-items: center; gap: .6rem; font-weight: 750; letter-spacing: .01em; }
     .brand-mark { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(145deg, var(--accent), #6879e8); color: #091126; font-weight: 900; font-size: .85rem; }
-    #build-status { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: .35rem .7rem; margin: 0; color: var(--muted); font-size: .78rem; text-align: right; }
-    .preview-context { color: rgba(155, 168, 196, .72); font-size: .68rem; }
+    #build-status { display: flex; flex-direction: column; align-items: flex-end; gap: .15rem; margin: 0; text-align: right; }
+    #build-status-text { color: var(--text); font-size: .82rem; font-weight: 600; }
+    .preview-context { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .15rem .5rem; color: rgba(155, 168, 196, .72); font-size: .68rem; }
     .preview-branch { color: rgba(115, 214, 160, .82); }
     .preview-folder { color: rgba(243, 162, 111, .82); }
+    /* Provenance stays visible but secondary. A non-production build must be
+       unmistakable -- UAT must never be mistakable for production. */
+    .preview-context.non-production { color: #ffd479; font-weight: 700; }
+    .preview-context.non-production .preview-folder::before { content: "▲ "; }
     .app-body { display: grid; grid-template-columns: minmax(180px, 220px) minmax(0, 1fr); min-height: 0; }
     .app-nav { display: flex; flex-direction: column; gap: .15rem; padding: 1rem .75rem; border-right: 1px solid rgba(155, 168, 196, .16); background: rgba(19, 27, 49, .55); }
     .nav-link { display: block; border: 1px solid transparent; border-radius: 8px; color: var(--muted); text-decoration: none; padding: .55rem .7rem; font-size: .88rem; }
@@ -474,6 +479,32 @@
     @media (prefers-reduced-motion: reduce) {
       .chart-plot, .chart-plot .chart-line, .chart-plot .chart-area, .chart-plot .chart-signal-marker, .chart-plot .chart-accumulation-marker, .chart-plot .chart-rns-marker { transition: none; }
     }
+    /* Mobile: ticker + signal + alert date must fit in the first viewport of a
+       card, so the card is compacted rather than merely shrunk.
+
+       This block MUST stay last in the stylesheet. It overrides base card
+       rules of equal specificity, so source order is what decides. */
+    @media (max-width: 600px) {
+      html, body { overflow-x: hidden; }
+      .app-main { padding: 1rem .85rem 2.5rem; }
+      .featured-list { grid-template-columns: 1fr; gap: .6rem; }
+      .featured-card { min-height: 0; padding: .7rem .8rem; border-radius: 10px; }
+      .featured-kicker { display: none; }
+      .featured-heading { gap: .35rem; align-items: flex-start; }
+      .featured-heading strong { font-size: 1.02rem; }
+      .featured-severity { max-width: 45%; font-size: .64rem; line-height: 1.25; }
+      .featured-company { font-size: .72rem; }
+      .featured-meta { margin: .2rem 0 0; font-size: .76rem; }
+      .featured-orientation { margin: .15rem 0 0; font-size: .7rem; }
+      .featured-evidence { gap: .25rem; margin-top: .3rem; }
+      .featured-link { padding-top: .55rem; font-size: .78rem; }
+      .metric-grid { gap: .5rem; margin-bottom: 1.1rem; }
+      .metric-card { padding: .7rem .8rem; }
+      .metric-value { font-size: 1.3rem; }
+      .view-heading { margin-bottom: .7rem; }
+      .research-workspace { grid-template-columns: minmax(0, 1fr); }
+    }
+    #build-status-text, .preview-context { overflow-wrap: anywhere; }
   </style>
 </head>
 <body>

@@ -6,7 +6,7 @@
  */
 
 import { escapeHtml, formatQuotePrice, humanDate, renderBeginner, renderPointEventContext, renderPro } from "./browser.js?v=007rns";
-import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail } from "./shell_data.js?v=008web";
+import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail, isInstrumentContractPayload } from "./shell_data.js?v=008web";
 import { parseState, serializeState } from "./shell_state.js?v=009learn";
 import { renderHowToUseCrashDash, renderWhatToExpectCrashDash, renderLearnResources } from "./learn_pages.js?v=009learn";
 import {
@@ -60,7 +60,7 @@ let selectedChartDate = null;
 let chartFilters = { severities: {}, accumulation: true, rns: true };
 let company30sIndex = 0;
 
-const currentFilters = { severity: "ALL", accumulationOnly: false, sort: "severity", exchange: "ALL" };
+const currentFilters = { severity: "ALL", accumulationOnly: false, sort: "newest", exchange: "ALL" };
 const historyFilters = { severity: "ALL", accumulationOnly: false, year: "ALL", search: "", view: "all", pageSize: PAGE_SIZE_OPTIONS[0], page: 1 };
 function prefersReducedMotion() {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -194,7 +194,11 @@ async function loadInstrumentBundle(instrumentId) {
         instrumentFailures.set(instrumentId, result.status);
       }
     } else {
-      detail = reference || null;
+      // Without a detail_path this entry is a lightweight index reference, not
+      // an instrument web contract. Only treat it as a payload when it really
+      // is one; otherwise fail closed to NOT_AVAILABLE. Passing a reference to
+      // the normaliser throws and breaks the whole list view.
+      detail = isInstrumentContractPayload(reference) ? reference : null;
       if (!detail) instrumentFailures.set(instrumentId, "NOT_AVAILABLE");
     }
   }
@@ -205,7 +209,17 @@ async function loadInstrumentBundle(instrumentId) {
     loadedInstrumentId = instrumentId;
     return true;
   }
-  bundle = normaliseInstrumentDetail(detail, record);
+  // A single malformed detail payload must never take down the list view; it
+  // degrades to the CONTRACT_ERROR panel while the list stays usable.
+  try {
+    bundle = normaliseInstrumentDetail(detail, record);
+  } catch {
+    bundle = null;
+    instrumentFailures.set(instrumentId, "CONTRACT_ERROR");
+    instrumentUnavailableReason = "CONTRACT_ERROR";
+    loadedInstrumentId = instrumentId;
+    return true;
+  }
   loadedInstrumentId = instrumentId;
   selectedChartDate = null;
   chartFilters = { severities: {}, accumulation: true, rns: true };
@@ -780,8 +794,13 @@ async function loadPreviewContext() {
     }));
     const branch = values.branch || "branch unavailable";
     const folder = values.folder || "folder unavailable";
-    if (previewBranch) previewBranch.textContent = `Preview: ${branch}`;
-    if (previewFolder) previewFolder.textContent = folder;
+    if (previewBranch) previewBranch.textContent = `Branch: ${branch}`;
+    if (previewFolder) previewFolder.textContent = `Environment: ${folder}`;
+    // Provenance stays visible but secondary; a non-production build is highlighted
+    // so UAT can never be read as production.
+    if (previewContext) {
+      previewContext.classList.toggle("non-production", folder !== "production");
+    }
   } catch {
     previewContext.textContent = "Preview source unavailable";
   }

@@ -123,8 +123,8 @@ export function renderToday(summary, featured) {
       ? '<span class="dashboard-chip accumulation">Accumulation Detected</span>' : "";
     return `<li class="featured-card severity-${severityClass}">
       <div class="featured-heading"><div><span class="featured-kicker">Research Alert</span><strong>${escapeHtml(record.ticker)}</strong>${company}</div><span class="featured-severity">${escapeHtml(record.watch_severity || "Context unavailable")}</span></div>
-      ${orientation ? `<p class="featured-orientation">${escapeHtml(orientation)}</p>` : ""}
       <p class="featured-meta">Alert created ${escapeHtml(humanDate(record.signal_date) || "date unavailable")}</p>
+      ${orientation ? `<p class="featured-orientation">${escapeHtml(orientation)}</p>` : ""}
       ${activity || accumulation ? `<div class="featured-evidence">${activity ? `<span class="dashboard-chip activity">${escapeHtml(activity)}</span>` : ""}${accumulation}</div>` : ""}
       <a class="featured-link" href="?view=current&amp;ticker=${encodeURIComponent(record.instrument_id)}">Continue research &rarr;</a>
     </li>`;
@@ -188,7 +188,7 @@ export function renderCurrentList(allRecords, selectedInstrumentId, filters) {
     return '<section class="status dashboard-empty"><p>No current Research Alerts are available.</p></section>';
   }
   const filtered = filterCurrentRecords(allRecords, filters);
-  const visible = sortCurrentRecords(filtered, filters.sort || "severity");
+  const visible = sortCurrentRecords(filtered, filters.sort || "newest");
   const showQuality = columnHasVariation(allRecords, "data_quality");
   const exchanges = availableExchanges(allRecords);
   const rows = visible.map((record) => {
@@ -218,7 +218,7 @@ export function renderCurrentList(allRecords, selectedInstrumentId, filters) {
       <div class="filter-group">${severityFilterBar(filters.severity || "ALL", "severity-filter")}</div>
       <label class="filter-toggle"><input type="checkbox" data-accumulation-filter ${filters.accumulationOnly ? "checked" : ""}> Accumulation</label>
       ${exchangeFilter}
-      <label class="sort-control">Sort <select data-dashboard-sort><option value="severity" ${(filters.sort || "severity") === "severity" ? "selected" : ""}>Severity</option><option value="newest" ${filters.sort === "newest" ? "selected" : ""}>Newest</option></select></label>
+      <label class="sort-control">Sort <select data-dashboard-sort><option value="newest" ${(filters.sort || "newest") === "newest" ? "selected" : ""}>Newest</option><option value="severity" ${filters.sort === "severity" ? "selected" : ""}>Severity</option></select></label>
     </div>
     ${qualityNote}
     <div class="dashboard-list">${rows || '<p class="dashboard-empty">No instruments match these filters.</p>'}</div>
