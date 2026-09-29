@@ -1,0 +1,108 @@
+{
+  "canonical_run_id": "market-cycle-2026-09-30-1000",
+  "files": {
+    "CNAME": {
+      "origin": "carried from previous publication / generated",
+      "product_sha256": null,
+      "published_sha256": "d8651679d23ed4d2bf93705e0439cb5ec9094b6c83eae256daef33b430f57427"
+    },
+    "browser.js": {
+      "byte_identical_to_product": true,
+      "product_sha256": "1be7a36276e7186509ce6619773006038a7c9b21538735e7228a5231599e45d9",
+      "published_sha256": "1be7a36276e7186509ce6619773006038a7c9b21538735e7228a5231599e45d9"
+    },
+    "build.json": {
+      "byte_identical_to_product": false,
+      "product_sha256": "b62c1a20d585eb22f9fa560e83efaf0f820e41c3b1eaa35dcee80838acedfb15",
+      "published_sha256": "5eee191bdf7601dd79d8a25811419cf4cde1fb9d1450873763019b17e96f7c3f"
+    },
+    "data/beginner.json": {
+      "byte_identical_to_product": true,
+      "product_sha256": "2a0154193027fabf90102fda545b0da22d77e6c5cfc24069f5aa06c6ffb53ec9",
+      "published_sha256": "2a0154193027fabf90102fda545b0da22d77e6c5cfc24069f5aa06c6ffb53ec9"
+    },
+    "data/dashboard.json": {
+      "byte_identical_to_product": true,
+      "product_sha256": "2723ea0e7a0e643753e6f72a88b0a1af800d5470b6a0b0bb55e8df699f7922e7",
+      "published_sha256": "2723ea0e7a0e643753e6f72a88b0a1af800d5470b6a0b0bb55e8df699f7922e7"
+    },
+    "data/history.json": {
+      "byte_identical_to_product": true,
+      "product_sha256": "6e7072b745dbab925b6857b64ab3b1c59948e0e0677eb7f641048e546bfbf6d6",
+      "published_sha256": "6e7072b745dbab925b6857b64ab3b1c59948e0e0677eb7f641048e546bfbf6d6"
+    },
+    "data/pro.json": {
+      "byte_identical_to_product": true,
+      "product_sha256": "2a0154193027fabf90102fda545b0da22d77e6c5cfc24069f5aa06c6ffb53ec9",
+      "published_sha256": "2a0154193027fabf90102fda545b0da22d77e6c5cfc24069f5aa06c6ffb53ec9"
+    },
+    "index.html": {
+      "byte_identical_to_product": true,
+      "product_sha256": "ad75b8ea8255b1db9a8431a2221bfd009837df782af950610869836bd9cedd0f",
+      "published_sha256": "ad75b8ea8255b1db9a8431a2221bfd009837df782af950610869836bd9cedd0f"
+    },
+    "learn_pages.js": {
+      "byte_identical_to_product": true,
+      "product_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa",
+      "published_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa"
+    },
+    "preview-context.txt": {
+      "origin": "carried from previous publication / generated",
+      "product_sha256": null,
+      "published_sha256": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383"
+    },
+    "real_contract.js": {
+      "byte_identical_to_product": false,
+      "product_sha256": "a382e27d2d3a56d6b8e80cbe5421c5a482fc54032b406590ec40fb955c467487",
+      "published_sha256": "f4d2e3c217333cc636c3446526ada7826da35b4527e7dd611534f9e6603a99ee"
+    },
+    "shell.js": {
+      "byte_identical_to_product": false,
+      "product_sha256": "add2315a724e96b08065237246dfd4d4060e2bc2f3fc31bd2ccd9e24ff70f934",
+      "published_sha256": "8f7ec05c421ccf0942229207db3874e8d524efd249786372d4324346314a378e"
+    },
+    "shell_data.js": {
+      "byte_identical_to_product": false,
+      "product_sha256": "d708821b7ef4286f514e243e7eba4d34ca0b06329b8ff85681c0f3e5ef00937a",
+      "published_sha256": "d15870301b8df3fd03678d383ae1c1b3b7672408a99a5821620f957d39b632be"
+    },
+    "shell_state.js": {
+      "byte_identical_to_product": true,
+      "product_sha256": "5ac0490d1f175c18f8b00eb7d683afe4c36ea136b074f7d4a126588b37ab24d7",
+      "published_sha256": "5ac0490d1f175c18f8b00eb7d683afe4c36ea136b074f7d4a126588b37ab24d7"
+    },
+    "shell_views.js": {
+      "byte_identical_to_product": false,
+      "product_sha256": "a8e50dcb41f2e4c21f8612628ef372b3d91b0eb0cb9914dcede507b97193b165",
+      "published_sha256": "656af3386f6452265f4ebf87a67b950d3b33917f722d1f9f7c5eaebcdca12a55"
+    }
+  },
+  "generated_at": "2026-09-29T10:03:54.654811+00:00",
+  "image_id": "sha256:adaee6a873194dd12093da597238c8fd01ab5eaf84d333d9d89ecb9e8a50b7b2",
+  "image_ref": "crashdash:sha-ea0e7d7",
+  "product_run_id": "manual-e65095667824",
+  "product_tree_sha256": "5d2fbeebfd3034ae5dcebee68b8a06f67c9dd8821aeffdfe59d83183f082d452",
+  "product_validation_status": "VALIDATED",
+  "publication_target": {
+    "branch": "main",
+    "declared_in": "tron-proxmox/config/workloads/crashdash/uat/deployment.yaml (publication.uat_target)",
+    "path": "docs",
+    "repository": "arbtraderlabs/CrashDash-uat-live",
+    "url": "https://uat.crashdash.ai"
+  },
+  "published_at": "2026-09-29T10:17:51.983133+00:00",
+  "publisher_handoff_status": "SKIPPED",
+  "reference": {
+    "cohort_sha256": "2a47fdd8dc9bfcd8cb108105ee5b37cd30800c519b4e0d63ee247424b5613559",
+    "replay_fixtures_root": "/data/crashdash/uat/fixtures/market-data",
+    "signal_history_sha256": "59a450b256446e92af0e5854c08d759bf3ec4323bdbcca14ec1b013f58176d6e",
+    "ticker_master_sha256": "e7ee58ede386f76ba53839f5335955d741fc6b3b6f2189ac919e88059ca99aaa"
+  },
+  "schema": "CRASHDASH_UAT_PUBLICATION_V1",
+  "signal_count": 0,
+  "signal_generated_at": "2026-09-29T10:02:58.344268+00:00",
+  "source_sha": "ea0e7d7a950d96c7c733fb60064e73e3a7e304e8",
+  "transform": "documented flat-hosting publication transform only: '../browser.js' -> './browser.js' in shell.js, shell_views.js, shell_data.js, real_contract.js; no other content change",
+  "uat_run_id": "uat-20260929T100252Z-1000",
+  "zero_signal": true
+}
