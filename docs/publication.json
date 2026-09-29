@@ -185,7 +185,7 @@
     }
   ],
   "reference": {
-    "cohort_sha256": "7a2c71ba8489189492898e8f3469caf458480e9169d34e16d151ac4b482c57d7",
+    "cohort_sha256": "70885f621d275f690570fac00a2ab655d2ebde47dd768fb23ca43d2dd5925d2b",
     "reference_snapshot_sha256": "c30c68c9bd72e77de8891f3fa669e6e9eeb46f947d5b7360ece0a917a51b52ce",
     "replay_fixtures_root": "/data/crashdash/uat/fixtures/market-data",
     "signal_history_sha256": "59a450b256446e92af0e5854c08d759bf3ec4323bdbcca14ec1b013f58176d6e",
