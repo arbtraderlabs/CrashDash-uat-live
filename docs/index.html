@@ -540,6 +540,28 @@
       </main>
     </div>
   </div>
-  <script type="module" src="./shell.js?v=009learn"></script>
+  <script>
+    /* CrashDash UAT publication transform: cache-invalidation shim.
+       build.json and data/*.json are published with Cache-Control: max-age=600,
+       so a previously cached response can be reused after a new deployment and
+       render a stale site without any error. preview-context.txt already
+       requests no-store; this applies the same policy to the JSON the dashboard
+       renders from, so no visitor has to hard-refresh. Publication-only change:
+       no application source is modified. See README.md. */
+    (function () {
+      var nativeFetch = window.fetch;
+      if (typeof nativeFetch !== "function") { return; }
+      var METADATA = /(^|\/)(build\.json|data\/[^\/?]+\.json)(\?|$)/;
+      window.fetch = function (input, init) {
+        try {
+          if (typeof input === "string" && METADATA.test(input)) {
+            init = Object.assign({}, init, { cache: "no-store" });
+          }
+        } catch (error) { /* never break the application */ }
+        return nativeFetch.call(this, input, init);
+      };
+    })();
+  </script>
+  <script type="module" src="./shell.js?v=20260929T100354Z"></script>
 </body>
 </html>

@@ -25,6 +25,21 @@ Publishing steps once a UAT run passes:
 5. commit and push `main`
 6. verify `https://uat.crashdash.ai` serves the expected run before claiming PASS
 
+## Publication-only transforms
+
+These are the only permitted differences between the accepted UAT product tree
+and the published `docs/` tree. Every publication must apply them, and any new
+transform must be added here before it is used.
+
+| transform | why |
+| --- | --- |
+| flatten module imports: `../browser.js` -> `./browser.js` in `shell.js`, `shell_views.js`, `shell_data.js`, `real_contract.js` | the product tree is published flat, so parent-relative module paths cannot resolve |
+| cache-invalidation shim in `index.html` | `build.json` and `data/*.json` are served with `Cache-Control: max-age=600`, so a cached response could otherwise survive a deployment and render a stale site with no error; the shim applies the same `cache: "no-store"` policy that `preview-context.txt` already uses. Never rely on visitors to hard-refresh. |
+| deployment-stamped entry module (`shell.js?v=<deployment token>`) | forces a fresh module graph per publication |
+| generated `build.json` and `publication.json` | provenance, per the Provenance section above |
+
+`docs/CNAME` is preserved from the previous publication.
+
 ## What belongs in docs/
 
 - the generated static website (HTML/CSS/JS/assets) produced by a **successful**
