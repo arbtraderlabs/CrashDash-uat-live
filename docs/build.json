@@ -1,12 +1,12 @@
 {
   "schema_version": "V1",
-  "generated_at": "2026-09-29T14:31:17Z",
-  "refreshed_at": "2026-09-29T14:31:17Z",
+  "generated_at": "2026-09-29T15:30:27Z",
+  "refreshed_at": "2026-09-29T15:30:27Z",
   "canonical_run_id": "market-cycle-2026-09-30-1000",
-  "product_run_id": "market-cycle-2026-09-30-1000-web",
+  "product_run_id": "manual-51d0b3bfd99f",
   "signal_count": 38,
-  "source_sha": "6f2a127f5fcb3c59f271cd06ab6cf2f0b21251ae",
-  "image_id": "sha256:19b117ef198d82fb36f3caf0eab39e745b0d9dfba40d6bd210d3a5bdb1b9a075",
-  "image_ref": "crashdash:sha-6f2a127",
-  "uat_run_id": "uat-20260929T1408Z-1000"
+  "source_sha": "a3d66eb06be6de2dbc75fc6f00716c43a9fcb435",
+  "image_id": "sha256:d18fc4eac5646dd5c2a005cdc727cc750b570432f17af71704f943561eb69754",
+  "image_ref": "crashdash:sha-a3d66eb0",
+  "uat_run_id": "uat-20260929T152632Z-1000"
 }

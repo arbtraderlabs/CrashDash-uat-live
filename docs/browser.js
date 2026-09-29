@@ -8,15 +8,16 @@ export function loadBundle(bundle, expectedSchema = "V1") {
   return bundle.data || bundle;
 }
 
-function evidenceLabel(value, fallback) {
-  if (value === null || value === undefined || value === "") {
-    return `<span class="unavailable">${fallback}</span>`;
-  }
-  return String(value);
-}
-
+/* Pure HTML escaper. It never generates markup: a nullish or empty value
+ * escapes to the empty string, so an empty field can never leak a literal
+ * "<span ...>" fragment into text content or an attribute value (the historical
+ * search-control defect). Presenting an "unavailable" placeholder is a separate,
+ * explicit responsibility carried by the literal `<p class="unavailable">`
+ * markup the renderers emit where a value is genuinely missing; it must never
+ * be a side effect of escaping. */
 export function escapeHtml(value) {
-  return evidenceLabel(value, "").replace(/[&<>"']/g, (character) => ({
+  if (value === null || value === undefined) return "";
+  return String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
@@ -489,12 +490,10 @@ export function renderPointEventContext(point, events, quoteUnit) {
   }
   const rnsEvents = events?.rns || [];
   if (rnsEvents.length) {
-    // Root cause of the historical "<span class="unavailable">" leak: escapeHtml()
-    // doubles as an "empty value -> visible unavailable placeholder" helper
-    // (see evidenceLabel()), which is correct for genuinely-missing fields but
-    // wrong for a suffix that is deliberately blank (same-session RNS has no
-    // extra date to show). Every optional segment below is filtered out
-    // *before* escaping, so escapeHtml() is never called with "".
+    // escapeHtml() is a pure escaper and never turns an empty value into visible
+    // markup. The optional segments below are still filtered out *before*
+    // escaping so a deliberately-blank segment (same-session RNS has no extra
+    // date to show) never contributes an empty separator.
     const first = rnsEvents[0];
     const firstDateValue = cleanDisplayText(first.date, "");
     const sameSession = firstDateValue === point.date;
