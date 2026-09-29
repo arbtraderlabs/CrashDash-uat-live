@@ -542,12 +542,7 @@
   </div>
   <script>
     /* CrashDash UAT publication transform: cache-invalidation shim.
-       build.json and data/*.json are published with Cache-Control: max-age=600,
-       so a previously cached response can be reused after a new deployment and
-       render a stale site without any error. preview-context.txt already
-       requests no-store; this applies the same policy to the JSON the dashboard
-       renders from, so no visitor has to hard-refresh. Publication-only change:
-       no application source is modified. See README.md. */
+       See the governed CrashDash-uat-live README. */
     (function () {
       var nativeFetch = window.fetch;
       if (typeof nativeFetch !== "function") { return; }
@@ -562,6 +557,6 @@
       };
     })();
   </script>
-  <script type="module" src="./shell.js?v=20260929T100354Z"></script>
+  <script type="module" src="./shell.js?v=20260929T143117Z"></script>
 </body>
 </html>
