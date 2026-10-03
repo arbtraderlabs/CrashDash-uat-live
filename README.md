@@ -7,8 +7,11 @@ must never receive production output.
 ## Layout
 
 GitHub Pages is configured as **Deploy from a branch -> `main` -> `/docs`**, with
-custom domain `uat.crashdash.ai`. DNS check succeeded; HTTPS is pending
-certificate issuance.
+custom domain `uat.crashdash.ai`. The currently committed `docs/` contains a
+generated UAT publication for canonical run `market-cycle-2026-09-30-1000`,
+image `sha256:d18fc4eac5646dd5c2a005cdc727cc750b570432f17af71704f943561eb69754`,
+and UAT execution `uat-20260929T152632Z-1000`. This identifies the committed
+artifact and is not a live HTTPS health check.
 
 ```
 /                README.md and minimal repo metadata only
@@ -16,7 +19,7 @@ certificate issuance.
 /docs/index.html must exist
 ```
 
-Publishing steps once a UAT run passes:
+UAT publication steps:
 
 1. build the static site from the accepted UAT run output
 2. replace `docs/` atomically (stale publications from a previous run must not survive)
@@ -73,9 +76,8 @@ rejected rather than served.
 
 ## Status
 
-Scaffolding only. **No UAT run has produced accepted output yet**, so no website
-artifacts have been published. The latest UAT chain execution failed at the live
-market-data stage (provider HTTP 429 and delisted tickers), which is precisely the
-dependency that deterministic UAT mode exists to remove but does not yet implement.
-
-Custom domain (planned, not yet configured): `uat.crashdash.ai`.
+The committed artifact is generated UAT output. Build provenance and the
+execution record in `docs/build.json` are authoritative for that publication.
+The README does not claim that the current Pages endpoint or custom-domain TLS
+is healthy; verify the public endpoint separately when that is the acceptance
+criterion.
