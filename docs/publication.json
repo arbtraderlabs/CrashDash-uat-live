@@ -41,10 +41,7 @@
     "current_story_viewer.js": {
       "origin": "product tree",
       "product_sha256": "b8e4062884697a365af1c2e6d372042a586765b95387972ac7ed9ea9d225ded0",
-      "published_sha256": "d72569c7c80e2997dee3726e9e1d8f8e4c134f5016ca964a27ed14dd3f7ca71c",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "ed3de358c2f2aca136dac707169d0270511011dfa564ad4e9ae29a4d9ec0775a"
     },
     "data/beginner.json": {
       "origin": "product tree",
@@ -133,26 +130,17 @@
     "real_contract.js": {
       "origin": "product tree",
       "product_sha256": "a382e27d2d3a56d6b8e80cbe5421c5a482fc54032b406590ec40fb955c467487",
-      "published_sha256": "f4d2e3c217333cc636c3446526ada7826da35b4527e7dd611534f9e6603a99ee",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "f78347b463e36c5bac9b995e7db58c573e9c60aa964974aca258f50ed2e3d51c"
     },
     "shell.js": {
       "origin": "product tree",
       "product_sha256": "d439eae681bbca4ff853a1be7f0e20a5ae2ffa5fa46775c8f8e5c52fdd27c696",
-      "published_sha256": "028f33e1522e80fb88dbd6093adba6f02615eed64d23316010443349d26141c1",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "132c5e3612192c25e5aedcdcabc826c7cab8bb65b8a54cf5713b6a59bb8d6e23"
     },
     "shell_data.js": {
       "origin": "product tree",
       "product_sha256": "d708821b7ef4286f514e243e7eba4d34ca0b06329b8ff85681c0f3e5ef00937a",
-      "published_sha256": "d15870301b8df3fd03678d383ae1c1b3b7672408a99a5821620f957d39b632be",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "98c96245f499a50acbd1261531a31e4836ee6cf68ed7a31ecee8b7c02460f698"
     },
     "shell_state.js": {
       "origin": "product tree",
@@ -162,29 +150,26 @@
     "shell_views.js": {
       "origin": "product tree",
       "product_sha256": "d48bd1723cf064b016215a0d75ee647756df47698ccd12f3fa851e72b698f730",
-      "published_sha256": "6aa244cfea257b0497526dd899540854e43fcacd3065905ce41679bbe15f36ac",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "051ce82f5b846039c561c0c1c06ceaac2514b395128d1b48b28189833fa9a9a4"
     },
     "story_views.js": {
       "origin": "product tree",
       "product_sha256": "41b05f0033f8c1d054cf9671153745b949008112529946f8b2043d74190fa019",
-      "published_sha256": "9f0346d472e4f784ce46229d8a0ed5885cd2134a5502b7172ff7bc6db18c4aad",
-      "transforms": [
-        "flatten ../browser.js -> ./browser.js"
-      ]
+      "published_sha256": "7e2c7d2accc88dbdf49b7a0762edb10aff346242258719587611997191796020"
     }
   },
   "overall_status": "DEGRADED_ACCEPTED",
   "provider_outages": [
     "sharechat"
   ],
+  "publication_revision": 2,
+  "revision_reason": "Republish of the same accepted tree. Module imports previously kept their build-time ?v= values, which are identical across deployments, so a browser could mix a new shell with a cached shell_state.js for the full cache-control max-age (600s). Every relative import is now stamped with the deployment token.",
   "signal_count": 67,
   "transforms": [
     "flatten ../browser.js -> ./browser.js in shell.js, shell_views.js, shell_data.js, real_contract.js, story_views.js, current_story_viewer.js",
     "cache-invalidation shim in index.html",
     "deployment-stamped entry module shell.js?v=20261017T145150Z",
+    "deployment-stamped module graph: every relative import stamped with ?v=20261017T145150Z",
     "generated build.json and publication.json",
     "CNAME and preview-context.txt preserved from previous publication"
   ]

@@ -1,4 +1,4 @@
-import { loadBundle } from "./browser.js";
+import { loadBundle } from "./browser.js?v=20261017T145150Z";
 
 export function normaliseRealBundle(beginnerPayload, proPayload) {
   return {
