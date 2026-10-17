@@ -881,6 +881,7 @@
             init = Object.assign({}, init, { cache: "no-store" });
           }
         } catch (error) { /* never break the application */ }
+        return nativeFetch.call(this, input, init);
       };
     })();
   </script>

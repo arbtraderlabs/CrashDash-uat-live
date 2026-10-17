@@ -101,7 +101,7 @@
     "index.html": {
       "origin": "product tree",
       "product_sha256": "c28a703eb25317a1d63dc4a27bc049d387d5b26440b1281fc0a938218f58a444",
-      "published_sha256": "07018e5fe252327a364141ede62edf926965d7f5999d59852d71cbd25fc0e9a5",
+      "published_sha256": "5bd9048ad0a16e90e151a487ad46e449e0a545fa572b9745dd7b3b20fda6fde0",
       "transforms": [
         "cache-invalidation shim",
         "deployment-stamped entry module shell.js?v=20261017T145150Z"
@@ -162,12 +162,12 @@
   "provider_outages": [
     "sharechat"
   ],
-  "publication_revision": 2,
-  "revision_reason": "Republish of the same accepted tree. Module imports previously kept their build-time ?v= values, which are identical across deployments, so a browser could mix a new shell with a cached shell_state.js for the full cache-control max-age (600s). Every relative import is now stamped with the deployment token.",
+  "publication_revision": 3,
+  "revision_reason": "Corrects a defect introduced by the publication transforms in revision 1. The cache-invalidation shim was republished without its final 'return nativeFetch.call(this, input, init);' line, so window.fetch returned undefined for every request. No network request was ever issued: the product feed reported CONTRACT_ERROR, preview-context reported unavailable, and ensureHistoryLoaded threw on undefined.then, leaving 'Loading company stories' forever. Revision 3 restores the canonical shim. The application artifact, source SHA and data are unchanged.",
   "signal_count": 67,
   "transforms": [
     "flatten ../browser.js -> ./browser.js in shell.js, shell_views.js, shell_data.js, real_contract.js, story_views.js, current_story_viewer.js",
-    "cache-invalidation shim in index.html",
+    "cache-invalidation shim in index.html (proxies to the native fetch)",
     "deployment-stamped entry module shell.js?v=20261017T145150Z",
     "deployment-stamped module graph: every relative import stamped with ?v=20261017T145150Z",
     "generated build.json and publication.json",
