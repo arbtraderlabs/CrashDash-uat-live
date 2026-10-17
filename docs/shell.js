@@ -5,10 +5,10 @@
  * shell_views.js as pure, independently testable functions.
  */
 
-import { escapeHtml, formatQuotePrice, humanDate, renderBeginner, renderPointEventContext, renderPro } from "./browser.js?v=20261017T145150Z";
-import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail, isInstrumentContractPayload } from "./shell_data.js?v=20261017T145150Z";
-import { parseState, serializeState } from "./shell_state.js?v=20261017T145150Z";
-import { renderHowToUseCrashDash, renderWhatToExpectCrashDash, renderLearnResources } from "./learn_pages.js?v=20261017T145150Z";
+import { escapeHtml, formatQuotePrice, humanDate, renderBeginner, renderPointEventContext, renderPro } from "./browser.js?v=20261017T162124Z";
+import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail, isInstrumentContractPayload } from "./shell_data.js?v=20261017T162124Z";
+import { parseState, serializeState } from "./shell_state.js?v=20261017T162124Z";
+import { renderHowToUseCrashDash, renderWhatToExpectCrashDash, renderLearnResources } from "./learn_pages.js?v=20261017T162124Z";
 import {
   filterHistoryRecords,
   paginate,
@@ -23,9 +23,9 @@ import {
   renderToday,
   selectTodayAlerts,
   summariseToday,
-} from "./shell_views.js?v=20261017T145150Z";
-import { buildCompanyNews, buildStories, buildStoryArtifact, quarterWindow, renderCompanyNews, renderCompanyStory, renderStoryHub } from "./story_views.js?v=20261017T145150Z";
-import { bindCurrentCatalystReplay, renderCurrentCatalystStory } from "./current_story_viewer.js?v=20261017T145150Z";
+} from "./shell_views.js?v=20261017T162124Z";
+import { buildCompanyNews, buildStories, buildStoryArtifact, quarterWindow, renderCompanyNews, renderCompanyStory, renderStoryHub } from "./story_views.js?v=20261017T162124Z";
+import { bindCurrentCatalystReplay, renderCurrentCatalystStory } from "./current_story_viewer.js?v=20261017T162124Z";
 
 function cleanChartEventText(value) {
   return String(value ?? "")
@@ -57,6 +57,10 @@ let historyLoadPromise = null;
 let loadedInstrumentId = null;
 let instrumentUnavailableReason = null;
 let productDataStatus = "LOADING";
+// Why the product feed could not be used. Published UAT acceptance needs this:
+// an opaque "invalid contract" panel cannot distinguish an unreachable origin
+// from a stale module or a genuinely malformed payload.
+let productDataStatusReason = "";
 let chartRange = "1Y";
 let selectedChartDate = null;
 let chartFilters = { severities: {}, accumulation: true, rns: true };
@@ -255,7 +259,10 @@ function renderProductStatusBanner() {
     return '<section class="status dashboard-empty" data-product-status="EMPTY"><p>No product data has been published yet.</p></section>';
   }
   if (productDataStatus === "CONTRACT_ERROR") {
-    return '<section class="status error-panel" data-product-status="CONTRACT_ERROR"><p>The product data feed returned an invalid contract and could not be loaded.</p></section>';
+    const detail = productDataStatusReason
+      ? `<p class="status-detail" data-product-status-reason>${escapeHtml(productDataStatusReason)}</p>`
+      : "";
+    return `<section class="status error-panel" data-product-status="CONTRACT_ERROR"><p>The product data feed returned an invalid contract and could not be loaded.</p>${detail}</section>`;
   }
   return "";
 }
@@ -638,7 +645,7 @@ function renderHistoricalView() {
 
 async function ensureHistoryLoaded() {
   if (historyData || historyLoadPromise) return historyLoadPromise;
-  historyLoadPromise = fetch("./data/history.json")
+  historyLoadPromise = fetchWithTimeout("./data/history.json")
     .then((response) => {
       if (response.status === 404) throw Object.assign(new Error("not found"), { reason: "NOT_AVAILABLE" });
       if (!response.ok) throw Object.assign(new Error("request failed"), { reason: "CONTRACT_ERROR" });
@@ -1001,26 +1008,45 @@ window.addEventListener("popstate", () => {
   showTour();
 });
 
+/* A stalled request must become a reported failure, never an endless
+   "Loading..." placeholder. 15s is well beyond a healthy static-file fetch. */
+const FETCH_TIMEOUT_MS = 15000;
+
+async function fetchWithTimeout(path, init) {
+  if (typeof AbortController !== "function") return fetch(path, init);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetch(path, { ...(init || {}), signal: controller.signal });
+  } catch (error) {
+    if (error && error.name === "AbortError") {
+      throw new Error(`timed out after ${FETCH_TIMEOUT_MS / 1000}s`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function safeFetchJson(path) {
   try {
-    const response = await fetch(path);
-    if (response.status === 404) return { status: "NOT_AVAILABLE", payload: null };
-    if (!response.ok) return { status: "CONTRACT_ERROR", payload: null };
+    const response = await fetchWithTimeout(path);
+    if (response.status === 404) return { status: "NOT_AVAILABLE", payload: null, reason: `HTTP 404 for ${path}` };
+    if (!response.ok) return { status: "CONTRACT_ERROR", payload: null, reason: `HTTP ${response.status} for ${path}` };
     try {
       return { status: "AVAILABLE", payload: await response.json() };
-    } catch {
-      return { status: "CONTRACT_ERROR", payload: null };
+    } catch (error) {
+      return { status: "CONTRACT_ERROR", payload: null, reason: `response was not valid JSON: ${path} (${error && error.message ? error.message : error})` };
     }
-  } catch {
-    return { status: "CONTRACT_ERROR", payload: null };
+  } catch (error) {
+    return { status: "CONTRACT_ERROR", payload: null, reason: `request failed: ${path} (${error && error.message ? error.message : error})` };
   }
 }
 
 async function loadPreviewContext() {
   if (!previewContext) return;
   try {
-    const response = await fetch("./preview-context.txt", { cache: "no-store" });
-    if (!response.ok) return;
+    const response = await fetch("./preview-context.txt", { cache: "no-store" });    if (!response.ok) return;
     const lines = (await response.text()).split("\n").map((line) => line.trim()).filter(Boolean);
     const values = Object.fromEntries(lines.map((line) => {
       const separator = line.indexOf("=");
@@ -1035,8 +1061,8 @@ async function loadPreviewContext() {
     if (previewContext) {
       previewContext.classList.toggle("non-production", folder !== "production");
     }
-  } catch {
-    previewContext.textContent = "Preview source unavailable";
+  } catch (error) {
+    previewContext.textContent = `Preview source unavailable (${error && error.message ? error.message : error})`;
   }
 }
 
@@ -1047,13 +1073,19 @@ async function bootstrap() {
     try {
       dashboard = normaliseDashboard(dashboardResult.payload);
       productDataStatus = "AVAILABLE";
-    } catch {
+      productDataStatusReason = "";
+    } catch (error) {
       dashboard = EMPTY_DASHBOARD;
       productDataStatus = "CONTRACT_ERROR";
+      productDataStatusReason = `dashboard.json did not match the expected contract: ${error && error.message ? error.message : error}`;
     }
   } else {
     dashboard = EMPTY_DASHBOARD;
     productDataStatus = dashboardResult.status === "NOT_AVAILABLE" ? "EMPTY" : "CONTRACT_ERROR";
+    productDataStatusReason = dashboardResult.reason || "";
+  }
+  if (productDataStatusReason) {
+    try { console.warn(`[crashdash] product feed unavailable: ${productDataStatusReason}`); } catch { /* never break the page */ }
   }
   const [beginnerResult, proResult, buildInfoResult] = await Promise.all([
     safeFetchJson("./data/beginner.json"),

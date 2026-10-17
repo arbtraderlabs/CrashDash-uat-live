@@ -565,20 +565,63 @@ function renderChartInspection(points, byIndexEvents, scale) {
 
 const CHART_RANGES = [["1M", 31], ["3M", 92], ["6M", 183], ["1Y", 365], ["2Y", 730], ["FULL", null]];
 
+const CHART_MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+/* Chart events arrive with mixed date shapes: price points use ISO dates while
+ * announcement records keep a display date such as "15 Oct 2026". Comparing
+ * those as strings silently fails ("15 Oct 2026" < "2026-01-01"), which dropped
+ * every announcement from the chart. Normalise first, always. */
+function chartEventDate(event) {
+  const raw = typeof event === "string" ? event : (event && event.date);
+  if (!raw) return null;
+  const text = String(raw).trim();
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+  const human = /^(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})$/.exec(text);
+  if (human) {
+    const month = CHART_MONTHS.indexOf(human[2].slice(0, 3).toLowerCase());
+    if (month >= 0) return `${human[3]}-${String(month + 1).padStart(2, "0")}-${human[1].padStart(2, "0")}`;
+  }
+  const parsed = Date.parse(text);
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString().slice(0, 10);
+}
+
 function chartDataForRange(convergence, range) {
   const points = Array.isArray(convergence.price_points) ? convergence.price_points : [];
-  if (!points.length) return { points: [], alerts: [], rns: [], earlierAlerts: 0 };
-  const end = points[points.length - 1].date;
+  if (!points.length) return { points: [], alerts: [], rns: [], earlierAlerts: 0, lastPriceDate: null, afterLastBar: 0 };
+  const end = chartEventDate(points[points.length - 1].date) || points[points.length - 1].date;
   const days = CHART_RANGES.find(([key]) => key === range)?.[1];
   const startDate = days === null
-    ? points[0].date
+    ? chartEventDate(points[0].date) || points[0].date
     : new Date(new Date(`${end}T00:00:00Z`).getTime() - days * 86400000).toISOString().slice(0, 10);
-  const inRange = (event) => event.date >= startDate && event.date <= end;
+  // Announcements are frequently published after the newest price bar: a stale or
+  // closed market feed ends earlier than the news. Clipping the domain at the last
+  // bar dropped those events silently -- the panel listed an announcement the chart
+  // never drew. Extend the domain only as far as a real event date, never further.
+  const tagged = (events) => (events || []).map((event) => ({
+    ...event,
+    chart_date: chartEventDate(event) || event.date,
+  }));
+  const eventDates = [...tagged(convergence.alert_markers), ...tagged(convergence.rns_markers)]
+    .map((event) => event.chart_date)
+    .filter(Boolean)
+    .sort();
+  const lastEventDate = eventDates.length ? eventDates[eventDates.length - 1] : null;
+  const domainEnd = lastEventDate && lastEventDate > end ? lastEventDate : end;
+  const inRange = (event) => Boolean(event.chart_date) && event.chart_date >= startDate && event.chart_date <= domainEnd;
+  const afterLastBar = (event) => Boolean(event.chart_date) && event.chart_date > end;
+  const alerts = tagged(convergence.alert_markers).filter(inRange);
+  const rns = tagged(convergence.rns_markers).filter(inRange);
   return {
-    points: points.filter(inRange),
-    alerts: (convergence.alert_markers || []).filter(inRange),
-    rns: (convergence.rns_markers || []).filter(inRange),
-    earlierAlerts: (convergence.alert_markers || []).filter((event) => event.date < startDate).length,
+    points: points.filter((point) => {
+      const date = chartEventDate(point.date) || point.date;
+      return date >= startDate && date <= domainEnd;
+    }),
+    alerts,
+    rns,
+    earlierAlerts: tagged(convergence.alert_markers).filter((event) => event.chart_date && event.chart_date < startDate).length,
+    lastPriceDate: end,
+    afterLastBar: alerts.filter(afterLastBar).length + rns.filter(afterLastBar).length,
   };
 }
 
@@ -594,20 +637,24 @@ function previousPriceIndex(points, eventDate) {
 function renderChartMarkers(points, markers, className, label, scale) {
   if (!Array.isArray(points) || !points.length || !Array.isArray(markers) || !scale) return "";
   return markers.map((marker) => {
-    const index = previousPriceIndex(points, marker.date);
+    const index = previousPriceIndex(points, marker.chart_date || marker.date);
     if (index < 0) return "";
     const x = toX(index, points.length);
     const y = scale.toY(Number(points[index].close));
     const severityClass = marker.severity ? ` severity-marker-${severityClassName(marker.severity)}` : "";
     const title = `${label}: ${marker.date}${marker.severity ? ` - ${marker.severity}` : ""}${marker.signal_type ? ` - ${marker.signal_type}` : ""}${marker.relative_activity ? ` - ${marker.relative_activity}x activity` : ""}${marker.accumulation ? " - Accumulation Detected" : ""}`;
     const markerState = marker.current ? " current" : " historical";
+    const afterBar = marker.afterLastBar ? ` data-after-last-bar="true"` : "";
+    const pinnedTitle = marker.afterLastBar
+      ? `${title} - published after the last price bar, so it is pinned to the final bar`
+      : title;
     const eventType = marker.event_type || marker.marker_type || (className === "chart-rns-marker" ? "RNS" : "CRASHDASH_SIGNAL");
     const safeEventType = escapeHtml(eventType);
     const shape = className === "chart-rns-marker"
-      ? `<rect class="${className}" data-event-type="${safeEventType}" x="${(x - 5).toFixed(1)}" y="${(y - 5).toFixed(1)}" width="10" height="10" transform="rotate(45 ${x.toFixed(1)} ${y.toFixed(1)})" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(title)}</title></rect>`
+      ? `<rect class="${className}"${afterBar} data-event-type="${safeEventType}" x="${(x - 5).toFixed(1)}" y="${(y - 5).toFixed(1)}" width="10" height="10" transform="rotate(45 ${x.toFixed(1)} ${y.toFixed(1)})" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(pinnedTitle)}</title></rect>`
       : marker.current
-        ? `<circle class="${className}${severityClass}${markerState}" data-event-type="${safeEventType}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${className === "chart-accumulation-marker" ? "8" : "6.5"}" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(title)}</title></circle>`
-        : `<circle class="${className}${severityClass}${markerState}" data-event-type="${safeEventType}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${className === "chart-accumulation-marker" ? "8" : "4.5"}" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(title)}</title></circle>`;
+        ? `<circle class="${className}${severityClass}${markerState}"${afterBar} data-event-type="${safeEventType}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${className === "chart-accumulation-marker" ? "8" : "6.5"}" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(pinnedTitle)}</title></circle>`
+        : `<circle class="${className}${severityClass}${markerState}"${afterBar} data-event-type="${safeEventType}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${className === "chart-accumulation-marker" ? "8" : "4.5"}" tabindex="0" data-chart-event="${escapeHtml(marker.chart_id || "")}" data-chart-x="${x.toFixed(1)}"><title>${escapeHtml(pinnedTitle)}</title></circle>`;
     return marker.chart_id ? `<a href="#${escapeHtml(marker.chart_id)}" aria-label="${escapeHtml(title)}">${shape}</a>` : shape;
   }).join("");
 }
@@ -766,8 +813,14 @@ function renderResearchSections(model, chartRange = "1Y", primaryContext = "", f
     .map((marker) => ({ ...marker, accumulation: filterState.accumulation && marker.accumulation }));
   const profileRns = Array.isArray(profile.rns?.records) ? profile.rns.records : [];
   const rnsRecords = profileRns.length ? profileRns : chartData.rns;
+  const lastPriceDate = chartData.lastPriceDate || (points.length ? points[points.length - 1].date : null);
+  const afterBar = (marker) => {
+    const date = marker.chart_date || chartEventDate(marker);
+    return Boolean(lastPriceDate && date && date > lastPriceDate);
+  };
+  for (const marker of alertMarkers) marker.afterLastBar = afterBar(marker);
   const rnsMarkers = filterState.rns
-    ? rnsRecords.map((item, index) => ({ ...item, chart_id: `rns-${index}` }))
+    ? rnsRecords.map((item, index) => ({ ...item, chart_id: `rns-${index}`, chart_date: chartEventDate(item), afterLastBar: afterBar(item) }))
     : [];
   const byIndexEvents = buildPointEvents(points, alertMarkers, rnsMarkers);
   if (filterState.accumulation) {
@@ -796,6 +849,9 @@ function renderResearchSections(model, chartRange = "1Y", primaryContext = "", f
   const sourceDate = local.source_as_of ? `Source refreshed ${escapeHtml(local.source_as_of)}` : "Local source date unavailable";
   const rangeControls = CHART_RANGES.map(([key]) => `<button type="button" class="chart-range${chartRange === key ? " active" : ""}" data-chart-range="${key}" aria-pressed="${chartRange === key}">${key === "FULL" ? "ALL" : key}</button>`).join("");
   const earlierNote = chartData.earlierAlerts ? `<p class="chart-note">${chartData.earlierAlerts} earlier Research Alert(s) exist outside this range.</p>` : "";
+  const afterBarNote = chartData.afterLastBar
+    ? `<p class="chart-note" data-chart-note="after-last-bar">${chartData.afterLastBar} event(s) are dated after the last price bar (${escapeHtml(String(chartData.lastPriceDate || ""))}) and are pinned to that bar because no price is available for those dates.</p>`
+    : "";
   const socialRecords = Array.isArray(model.social_records) ? model.social_records : [];
   const socialSnapshot = (model.sharechat_snapshot || profile.sharechat_snapshot) &&
     typeof (model.sharechat_snapshot || profile.sharechat_snapshot) === "object"
@@ -942,7 +998,7 @@ function renderResearchSections(model, chartRange = "1Y", primaryContext = "", f
         </svg>
         ${hasAccumulationMarker ? '<span class="chart-accessibility-note">Accumulation patterns are shown with purple halos.</span>' : ""}
       </div>
-      <p class="chart-note">${pricePath ? `Source price history shown for context only. ${sourceDate}.` : "Illustrative signal path. A source price series is not currently available, so CrashDash does not infer values."}</p>${earlierNote}
+      <p class="chart-note">${pricePath ? `Source price history shown for context only. ${sourceDate}.` : "Illustrative signal path. A source price series is not currently available, so CrashDash does not infer values."}</p>${earlierNote}${afterBarNote}
     </section>${renderAlertHistory(convergence.alert_markers)}${primaryContext}
     <section class="research-cards" aria-labelledby="research-intelligence-heading">
       <div class="section-heading"><div><p class="eyebrow">AI-enhanced research</p><h2 id="research-intelligence-heading">Research intelligence</h2></div><span class="state-chip placeholder">Evidence-led summary</span></div>

@@ -2,10 +2,10 @@
   "acceptance_policy": "UAT-OPTIONAL-ENRICHMENT-DEGRADED/v1",
   "candidate_identity_evidence": {
     "candidate_tree_sha256": "8fe9359663f559a5b6251c68048b534378cbed7eff36e6506938e3cf7fe91403",
-    "embedded_build_sha": "747787c4b8d7d0f652f0e235e6b11f323c261ee9",
-    "execution_manifest_id": "uat-20261017T145150Z-1000",
+    "embedded_build_sha": "5b5de5552368869105770a06edef29c5e9f7a66b",
+    "execution_manifest_id": "uat-20261017T162124Z-1000",
     "image_config_user": "10001:10001",
-    "image_id": "sha256:fff6f5b002f87620cd7975b36bb9ca7aead5a1e0d4fbda5fba63b5853bb8c133",
+    "image_id": "sha256:1b98d9c1fb33ea35d5ad7ff1748f6411e065c3402a64cf87f876f336f44b01d2",
     "image_id_observed_on": "uatcd01",
     "product_validation_status": "VALIDATED"
   },
@@ -20,7 +20,7 @@
     "RESI.L",
     "VID.L"
   ],
-  "deployment_token": "20261017T145150Z",
+  "deployment_token": "20261017T162124Z",
   "environment": "UAT",
   "files": {
     "CNAME": {
@@ -30,18 +30,18 @@
     },
     "browser.js": {
       "origin": "product tree",
-      "product_sha256": "8d3fb4b1b7b6ec4ccf09b4a7d2ae6bd9d8bb31c8e06825eaf3c9bad22d55bf51",
-      "published_sha256": "8d3fb4b1b7b6ec4ccf09b4a7d2ae6bd9d8bb31c8e06825eaf3c9bad22d55bf51"
+      "product_sha256": "88ba72ac5e059f8d13db1000d707b41bd129f6b418dbd1795893005cdfdf9c70",
+      "published_sha256": "88ba72ac5e059f8d13db1000d707b41bd129f6b418dbd1795893005cdfdf9c70"
     },
     "build.json": {
       "origin": "generated at publication",
       "product_sha256": null,
-      "published_sha256": "02fc7936bd3a749c22ca2b714ee78cd6f9dbd16d317140b81773c75c71655d4b"
+      "published_sha256": "76f80e4ea407b5a0f50e75c48d40a5bfe9aa0a852f56d749453b52f5ee306b5d"
     },
     "current_story_viewer.js": {
       "origin": "product tree",
       "product_sha256": "b8e4062884697a365af1c2e6d372042a586765b95387972ac7ed9ea9d225ded0",
-      "published_sha256": "ed3de358c2f2aca136dac707169d0270511011dfa564ad4e9ae29a4d9ec0775a"
+      "published_sha256": "6cd06d9d4dfa9b2cbaf5b81a6c83c795e82eb045cb93e41f50abb7b1e2fac85c"
     },
     "data/beginner.json": {
       "origin": "product tree",
@@ -101,10 +101,10 @@
     "index.html": {
       "origin": "product tree",
       "product_sha256": "c28a703eb25317a1d63dc4a27bc049d387d5b26440b1281fc0a938218f58a444",
-      "published_sha256": "5bd9048ad0a16e90e151a487ad46e449e0a545fa572b9745dd7b3b20fda6fde0",
+      "published_sha256": "41aa47c18fd11c920e0b1883c7031ac8ed64b6c10b36e6cacc305c3464237595",
       "transforms": [
         "cache-invalidation shim",
-        "deployment-stamped entry module shell.js?v=20261017T145150Z"
+        "deployment-stamped entry module shell.js?v=20261017T162124Z"
       ]
     },
     "learn_pages.js": {
@@ -122,25 +122,20 @@
       "product_sha256": null,
       "published_sha256": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383"
     },
-    "publication.json": {
-      "origin": "generated at publication",
-      "product_sha256": null,
-      "published_sha256": null
-    },
     "real_contract.js": {
       "origin": "product tree",
-      "product_sha256": "a382e27d2d3a56d6b8e80cbe5421c5a482fc54032b406590ec40fb955c467487",
-      "published_sha256": "f78347b463e36c5bac9b995e7db58c573e9c60aa964974aca258f50ed2e3d51c"
+      "product_sha256": "cc22404b8506b2cdd17d33c17d3c41e82db223ff932624a8015fd4ac62eae8c9",
+      "published_sha256": "2faa2eab28667cfada3fe0368d80ec8f51edaccf46977eee07f41ba756999753"
     },
     "shell.js": {
       "origin": "product tree",
-      "product_sha256": "d439eae681bbca4ff853a1be7f0e20a5ae2ffa5fa46775c8f8e5c52fdd27c696",
-      "published_sha256": "132c5e3612192c25e5aedcdcabc826c7cab8bb65b8a54cf5713b6a59bb8d6e23"
+      "product_sha256": "902612048e7ecf6f26c515f2e3b61463f9eff1147006df46e65f9720d4f65fd8",
+      "published_sha256": "4452a44a0d506c713629013cda17c7b81e2b3e828c8ab3a3c0a7f502ed65976e"
     },
     "shell_data.js": {
       "origin": "product tree",
       "product_sha256": "d708821b7ef4286f514e243e7eba4d34ca0b06329b8ff85681c0f3e5ef00937a",
-      "published_sha256": "98c96245f499a50acbd1261531a31e4836ee6cf68ed7a31ecee8b7c02460f698"
+      "published_sha256": "4d9e0d7a1a32de72bc57104777fb479e48d91a4d374888173aeb302a95a03de8"
     },
     "shell_state.js": {
       "origin": "product tree",
@@ -150,26 +145,25 @@
     "shell_views.js": {
       "origin": "product tree",
       "product_sha256": "d48bd1723cf064b016215a0d75ee647756df47698ccd12f3fa851e72b698f730",
-      "published_sha256": "051ce82f5b846039c561c0c1c06ceaac2514b395128d1b48b28189833fa9a9a4"
+      "published_sha256": "1ee83d3cb317a05308095f8fcb6167ba57de8897b4dc0ba626cae79a970e1f98"
     },
     "story_views.js": {
       "origin": "product tree",
       "product_sha256": "41b05f0033f8c1d054cf9671153745b949008112529946f8b2043d74190fa019",
-      "published_sha256": "7e2c7d2accc88dbdf49b7a0762edb10aff346242258719587611997191796020"
+      "published_sha256": "be9e6a0c007f2c60657da976ae56cd80552db311bf97498ec75dc745a59bb47f"
     }
   },
   "overall_status": "DEGRADED_ACCEPTED",
   "provider_outages": [
     "sharechat"
   ],
-  "publication_revision": 3,
-  "revision_reason": "Corrects a defect introduced by the publication transforms in revision 1. The cache-invalidation shim was republished without its final 'return nativeFetch.call(this, input, init);' line, so window.fetch returned undefined for every request. No network request was ever issued: the product feed reported CONTRACT_ERROR, preview-context reported unavailable, and ensureHistoryLoaded threw on undefined.then, leaving 'Loading company stories' forever. Revision 3 restores the canonical shim. The application artifact, source SHA and data are unchanged.",
+  "publication_revision": 1,
   "signal_count": 67,
   "transforms": [
     "flatten ../browser.js -> ./browser.js in shell.js, shell_views.js, shell_data.js, real_contract.js, story_views.js, current_story_viewer.js",
     "cache-invalidation shim in index.html (proxies to the native fetch)",
-    "deployment-stamped entry module shell.js?v=20261017T145150Z",
-    "deployment-stamped module graph: every relative import stamped with ?v=20261017T145150Z",
+    "deployment-stamped entry module shell.js?v=20261017T162124Z",
+    "deployment-stamped module graph: every relative import stamped with ?v=20261017T162124Z",
     "generated build.json and publication.json",
     "CNAME and preview-context.txt preserved from previous publication"
   ]

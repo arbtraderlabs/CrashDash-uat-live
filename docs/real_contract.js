@@ -1,4 +1,33 @@
-import { loadBundle } from "./browser.js?v=20261017T145150Z";
+import { loadBundle } from "./browser.js?v=20261017T162124Z";
+
+const MONTH_INDEX = {
+  jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+  jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+};
+
+/** Announcement dates arrive as ISO, as "15 Oct 2026", or as a timestamp.
+ *
+ *  The chart places markers by comparing dates as strings against the price
+ *  series, which is always ISO. An un-normalised "15 Oct 2026" can never fall
+ *  inside an ISO window, so announcements were silently dropped from the chart
+ *  even though they were present in the payload.
+ */
+export function isoDate(value) {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  if (!text) return null;
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+  const human = /^(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})$/.exec(text);
+  if (human) {
+    const month = MONTH_INDEX[human[2].slice(0, 3).toLowerCase()];
+    if (month) {
+      return `${human[3]}-${String(month).padStart(2, "0")}-${human[1].padStart(2, "0")}`;
+    }
+  }
+  const parsed = new Date(text);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().slice(0, 10);
+}
 
 export function normaliseRealBundle(beginnerPayload, proPayload) {
   return {
@@ -66,7 +95,11 @@ export function normaliseInstrumentDetail(detail, record = null) {
       signal_type: alert.signal_type || alert.signal_state,
       accumulation: alert.accumulation === "DETECTED" || alert.accumulation === true,
     }));
-    const rns = Array.isArray(instrument.rns) ? instrument.rns : [];
+    const rns = (Array.isArray(instrument.rns) ? instrument.rns : []).map((record) => {
+      const normalised = isoDate(record && record.date);
+      // Keep what the payload said for display, and give the chart a comparable key.
+      return normalised ? { ...record, display_date: record.date, date: normalised } : { ...record };
+    });
     const initialSharechat = Array.isArray(instrument.sharechat_initial)
       ? instrument.sharechat_initial : (instrument.sharechat || []).slice(0, 10);
     for (const model of [bundle.beginner, bundle.pro]) {

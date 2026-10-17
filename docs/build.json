@@ -1,20 +1,20 @@
 {
   "schema_version": "V1",
-  "generated_at": "2026-10-17T14:54:13Z",
-  "refreshed_at": "2026-10-17T14:54:13Z",
+  "generated_at": "2026-10-17T16:22:46Z",
+  "refreshed_at": "2026-10-17T16:22:46Z",
   "canonical_run_id": "market-cycle-2026-10-19-1000",
   "product_run_id": "market-cycle-2026-10-19-1000-web",
   "signal_count": 67,
   "current_signal_count": 7,
-  "source_sha": "747787c4b8d7d0f652f0e235e6b11f323c261ee9",
-  "image_id": "sha256:fff6f5b002f87620cd7975b36bb9ca7aead5a1e0d4fbda5fba63b5853bb8c133",
-  "image_ref": "crashdash:sha-747787c4",
-  "uat_run_id": "uat-20261017T145150Z-1000",
+  "source_sha": "5b5de5552368869105770a06edef29c5e9f7a66b",
+  "image_id": "sha256:1b98d9c1fb33ea35d5ad7ff1748f6411e065c3402a64cf87f876f336f44b01d2",
+  "image_ref": "crashdash:sha-5b5de555",
+  "uat_run_id": "uat-20261017T162124Z-1000",
   "environment": "UAT",
   "reference": {
     "ticker_master_sha256": "e7ee58ede386f76ba53839f5335955d741fc6b3b6f2189ac919e88059ca99aaa",
     "market_snapshot_sha256": "e43063c8e012622297de3454e4642b5a3d656ef64624effe8b1df945a2a17a99",
-    "cohort_sha256": "73602a238e7c207c0650e1075afc089428c01f427ad57e6ee9102142c74edb5f",
+    "cohort_sha256": "7cdc2cd858a3343349c6b2d2161df6a86bade1c23f52d68d554c5dd2177579b4",
     "cohort_tickers": 7
   }
 }
