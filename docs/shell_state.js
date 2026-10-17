@@ -10,11 +10,10 @@
 export const VIEWS = Object.freeze([
   "today",
   "current",
-  "historical",
-  "timeline",
+  "focus",
+  "company-news",
   "story",
   "watchlist",
-  "research",
   "learn",
   "guide",
   "expect",
