@@ -122,6 +122,11 @@
       "product_sha256": null,
       "published_sha256": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383"
     },
+    "publication.json": {
+      "origin": "generated at publication",
+      "product_sha256": null,
+      "published_sha256": null
+    },
     "real_contract.js": {
       "origin": "product tree",
       "product_sha256": "cc22404b8506b2cdd17d33c17d3c41e82db223ff932624a8015fd4ac62eae8c9",
