@@ -1,21 +1,24 @@
 {
   "candidate_identity_evidence": {
-    "embedded_build_sha": "a3d66eb06be6de2dbc75fc6f00716c43a9fcb435",
-    "execution_manifest_id": "uat-20260929T152632Z-1000",
+    "embedded_build_sha": "4c67204279062e66fca42ac94f72ae185ccc0ebb",
+    "execution_manifest_id": "uat-20261017T120000Z-1000",
     "image_config_user": "10001:10001",
     "image_id_observed_on": "uatcd01",
     "product_validation_status": "VALIDATED"
   },
-  "canonical_run_id": "market-cycle-2026-09-30-1000",
-  "current_signal_count": 6,
+  "canonical_run_id": "market-cycle-2026-10-19-1000",
+  "current_signal_count": 7,
   "current_tickers": [
     "ARS.L",
     "BCG.L",
     "CPH2.L",
     "FARN.L",
     "ONDO.L",
-    "RESI.L"
+    "RESI.L",
+    "VID.L"
   ],
+  "deployment_token": "20261017T103704Z",
+  "environment": "UAT",
   "files": {
     "CNAME": {
       "origin": "preserved from previous publication",
@@ -23,176 +26,136 @@
       "published_sha256": "d8651679d23ed4d2bf93705e0439cb5ec9094b6c83eae256daef33b430f57427"
     },
     "browser.js": {
-      "byte_identical_to_product": true,
-      "product_sha256": "8d3fb4b1b7b6ec4ccf09b4a7d2ae6bd9d8bb31c8e06825eaf3c9bad22d55bf51",
+      "origin": "product tree",
+      "product_sha256": null,
       "published_sha256": "8d3fb4b1b7b6ec4ccf09b4a7d2ae6bd9d8bb31c8e06825eaf3c9bad22d55bf51"
     },
     "build.json": {
-      "byte_identical_to_product": false,
-      "product_sha256": "b02f691d070347adca814e6726c1487b450df005786ed529a18335a1a6f7549f",
-      "published_sha256": "50b03e39b99f5ccce99dcd350deaa84037822746529763cdcde7da8f64c0ff82"
+      "origin": "generated at publication",
+      "product_sha256": null,
+      "published_sha256": "26b37d46e27c61c874616070853fbd7f9273f772ee446432448061e8ba12a045"
     },
     "data/beginner.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "5f38695cca7975496c692ba2ad03c29c4057c3c25e41a0978954ef2830639d5b",
-      "published_sha256": "5f38695cca7975496c692ba2ad03c29c4057c3c25e41a0978954ef2830639d5b"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "fbf22d25be87cc15a45fd7050352b9944bd8db0046bb4d23e76c186e19c3e8ba"
     },
     "data/dashboard.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "5e6dbd655351950e30b229a0b8178006c8b0913846517ef76dc3d6b9efa9bdb1",
-      "published_sha256": "5e6dbd655351950e30b229a0b8178006c8b0913846517ef76dc3d6b9efa9bdb1"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "1b3a7283b0956cda445a0788c266df4f20641d352f9f38538efdcced0bb240a2"
     },
     "data/history.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "dee12ac7de83bda9f3d3f9bd42cb85fa8e1c288c37c1f86d6abb9eaf96562c07",
-      "published_sha256": "dee12ac7de83bda9f3d3f9bd42cb85fa8e1c288c37c1f86d6abb9eaf96562c07"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "93bc68416879cf030ce08e4e638b5df2bffb1b69b66998b065fc0ddc635fef10"
     },
     "data/instruments/ARS.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "9240fb5a011892f0a38ca791d06cda2806d7137d44890e93c1380a2ebf8b8db5",
-      "published_sha256": "9240fb5a011892f0a38ca791d06cda2806d7137d44890e93c1380a2ebf8b8db5"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "ce4418d56974a34211ec2d7917e5b12b4e78abbe54c96c519d92b4b7c069c824"
     },
     "data/instruments/BCG.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "b941a4be1e329f2316cb87865351d5b77e0fd3369ab1713034d35e6e25e52591",
-      "published_sha256": "b941a4be1e329f2316cb87865351d5b77e0fd3369ab1713034d35e6e25e52591"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "50c139939d31d8e34c7272a516fdfad38c5f0f14c33e973c6d0742fef5f7584a"
     },
     "data/instruments/CPH2.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "9ad3133b0cbe8689963b03e4f574c16c32929145815d3c6814db9fab74b14a8f",
-      "published_sha256": "9ad3133b0cbe8689963b03e4f574c16c32929145815d3c6814db9fab74b14a8f"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "9e18f0b97e690e1a22854373c27a79af95ea57b5eee502d68935aae4e9843bb1"
     },
     "data/instruments/FARN.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "f485da838ba43680f0a9023239379cd70ac7fd2d28e7cf5b090245d080af806d",
-      "published_sha256": "f485da838ba43680f0a9023239379cd70ac7fd2d28e7cf5b090245d080af806d"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "b1855456696961345ba644b2083abb09492a5b2d39edb4bc90edf20c8176fb20"
     },
     "data/instruments/ONDO.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "bf38c498d14de94f3d9f007df5eb5fe0238a0100279d30c15fa1fdeef3384dac",
-      "published_sha256": "bf38c498d14de94f3d9f007df5eb5fe0238a0100279d30c15fa1fdeef3384dac"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "976257526cc089d85560de437823f32038768b2aaae1943f4719c5c47f1cbbca"
     },
     "data/instruments/RESI.L.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "eaf53bd84a9b83b9ebd04453d6928f2ea685a8634eec4511c87c322e921c2835",
-      "published_sha256": "eaf53bd84a9b83b9ebd04453d6928f2ea685a8634eec4511c87c322e921c2835"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "041244e736339b282c9f17f5cf817ef860b120c0570b02c246458050b96df60b"
+    },
+    "data/instruments/VID.L.json": {
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "ff5650f0bb67e275fe14132b3930fb35bd582c0e004a1b9f65ddb7168388d791"
     },
     "data/pro.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "3ac9a168783218e2f6d1dd9b8a4af940f18e6615b2a170e01efff941a1d7740c",
-      "published_sha256": "3ac9a168783218e2f6d1dd9b8a4af940f18e6615b2a170e01efff941a1d7740c"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "74c00f12887dfc4d83e53a79862a3d9bf539f5c607f629fb770701db6b785458"
     },
     "index.html": {
-      "byte_identical_to_product": false,
-      "product_sha256": "ad75b8ea8255b1db9a8431a2221bfd009837df782af950610869836bd9cedd0f",
-      "published_sha256": "d0dc6f37595955f1b34ca204720bfde8d507dbe5676de67892b27ec6258940e8"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "9fb62eea4086b53f51bcfe48d265c447a21b153c6fe9617b22bcfd0d65be243c"
     },
     "learn_pages.js": {
-      "byte_identical_to_product": true,
-      "product_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa",
+      "origin": "product tree",
+      "product_sha256": null,
       "published_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa"
     },
     "manifest.json": {
-      "byte_identical_to_product": true,
-      "product_sha256": "18d74eb1f210775ac8520599fedb1e2850a457d4f6b92439dbe8e9903ad269a6",
-      "published_sha256": "18d74eb1f210775ac8520599fedb1e2850a457d4f6b92439dbe8e9903ad269a6"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "c682aba471a3dddca22f3ba6b89ec77c647a42ddb7e08d7deaee4ee746aefc8c"
     },
     "preview-context.txt": {
-      "origin": "preserved UAT static-hosting context required by shell.js",
+      "origin": "preserved from previous publication",
       "product_sha256": null,
       "published_sha256": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383"
     },
+    "publication.json": {
+      "origin": "generated at publication",
+      "product_sha256": null,
+      "published_sha256": null
+    },
     "real_contract.js": {
-      "byte_identical_to_product": false,
-      "product_sha256": "a382e27d2d3a56d6b8e80cbe5421c5a482fc54032b406590ec40fb955c467487",
+      "origin": "product tree",
+      "product_sha256": null,
       "published_sha256": "f4d2e3c217333cc636c3446526ada7826da35b4527e7dd611534f9e6603a99ee"
     },
     "shell.js": {
-      "byte_identical_to_product": false,
-      "product_sha256": "add2315a724e96b08065237246dfd4d4060e2bc2f3fc31bd2ccd9e24ff70f934",
-      "published_sha256": "8f7ec05c421ccf0942229207db3874e8d524efd249786372d4324346314a378e"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "60c6f6a8275781f54812ef71c58e3979da8083298ac036711f36c24480dc753d"
     },
     "shell_data.js": {
-      "byte_identical_to_product": false,
-      "product_sha256": "d708821b7ef4286f514e243e7eba4d34ca0b06329b8ff85681c0f3e5ef00937a",
+      "origin": "product tree",
+      "product_sha256": null,
       "published_sha256": "d15870301b8df3fd03678d383ae1c1b3b7672408a99a5821620f957d39b632be"
     },
     "shell_state.js": {
-      "byte_identical_to_product": true,
-      "product_sha256": "5ac0490d1f175c18f8b00eb7d683afe4c36ea136b074f7d4a126588b37ab24d7",
-      "published_sha256": "5ac0490d1f175c18f8b00eb7d683afe4c36ea136b074f7d4a126588b37ab24d7"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "8efdf1f109efcacf638930f5946aaa5e081fbc87f0963b8c45ae33795cee1ef6"
     },
     "shell_views.js": {
-      "byte_identical_to_product": false,
-      "product_sha256": "a8e50dcb41f2e4c21f8612628ef372b3d91b0eb0cb9914dcede507b97193b165",
-      "published_sha256": "656af3386f6452265f4ebf87a67b950d3b33917f722d1f9f7c5eaebcdca12a55"
+      "origin": "product tree",
+      "product_sha256": null,
+      "published_sha256": "6aa244cfea257b0497526dd899540854e43fcacd3065905ce41679bbe15f36ac"
     }
   },
-  "generated_at": "2026-09-29T15:30:27Z",
-  "image_id": "sha256:d18fc4eac5646dd5c2a005cdc727cc750b570432f17af71704f943561eb69754",
-  "image_ref": "crashdash:sha-a3d66eb0",
-  "product_file_count": 20,
-  "product_manifest_entry_count": 10,
-  "product_run_id": "manual-51d0b3bfd99f",
-  "product_tree_hash_method": "sha256 of sorted UTF-8 lines: relative_path NUL file_sha256 LF, including build.json and manifest.json",
-  "product_tree_sha256": "dcb7ff5054337257b7116c6d5ddf0932c17796da0f75b7d61edcf88d4bdc3ca7",
-  "product_validation_status": "VALIDATED",
-  "publication_target": {
-    "branch": "main",
-    "path": "docs",
-    "repository": "arbtraderlabs/CrashDash-uat-live",
-    "url": "https://uat.crashdash.ai"
-  },
+  "generated_at": "2026-10-17T10:37:04Z",
+  "image_id": "sha256:a306a30c439729dd150478ad45ad3ffec630bf2451fa9f642313bfda1252262e",
+  "image_ref": "crashdash:sha-4c672042",
   "publication_transforms": [
-    {
-      "detail": "'../browser.js' -> './browser.js'",
-      "files": [
-        "shell.js",
-        "shell_views.js",
-        "shell_data.js",
-        "real_contract.js"
-      ],
-      "name": "flatten_module_imports"
-    },
-    {
-      "detail": "no-store for build.json and data/*.json",
-      "files": [
-        "index.html"
-      ],
-      "name": "cache_invalidation_shim"
-    },
-    {
-      "detail": "shell.js?v=20260929T153027Z",
-      "files": [
-        "index.html"
-      ],
-      "name": "deployment_stamped_entry_module"
-    },
-    {
-      "files": [
-        "build.json",
-        "publication.json"
-      ],
-      "name": "generated_provenance"
-    },
-    {
-      "detail": "CNAME is explicitly preserved; preview context remains UAT and is consumed by shell.js",
-      "files": [
-        "CNAME",
-        "preview-context.txt"
-      ],
-      "name": "preserved_hosting_metadata"
-    }
+    "flatten module imports",
+    "cache-invalidation shim in index.html",
+    "deployment-stamped entry module",
+    "generated build.json and publication.json"
   ],
   "reference": {
-    "cohort_sha256": "70885f621d275f690570fac00a2ab655d2ebde47dd768fb23ca43d2dd5925d2b",
-    "reference_snapshot_sha256": "c30c68c9bd72e77de8891f3fa669e6e9eeb46f947d5b7360ece0a917a51b52ce",
-    "replay_fixtures_root": "/data/crashdash/uat/fixtures/market-data",
-    "signal_history_sha256": "59a450b256446e92af0e5854c08d759bf3ec4323bdbcca14ec1b013f58176d6e",
+    "cohort_sha256": "f745abd2ded7701bdb93b7fd61602e9660e94d7ddea2dea30936fdb80099314f",
+    "cohort_tickers": 7,
+    "market_snapshot_sha256": "e43063c8e012622297de3454e4642b5a3d656ef64624effe8b1df945a2a17a99",
     "ticker_master_sha256": "e7ee58ede386f76ba53839f5335955d741fc6b3b6f2189ac919e88059ca99aaa"
   },
-  "schema": "CRASHDASH_UAT_PUBLICATION_V1",
-  "signal_count": 38,
-  "source_sha": "a3d66eb06be6de2dbc75fc6f00716c43a9fcb435",
-  "uat_run_id": "uat-20260929T152632Z-1000"
+  "source_sha": "4c67204279062e66fca42ac94f72ae185ccc0ebb",
+  "uat_run_id": "uat-20261017T120000Z-1000"
 }

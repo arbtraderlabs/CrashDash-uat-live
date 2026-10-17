@@ -18,6 +18,7 @@ import {
   renderHistoryTable,
   renderHistoryToolbar,
   renderTimeline,
+  renderStoryMode,
   renderLearn,
   renderPlaceholder,
   renderToday,
@@ -672,6 +673,14 @@ function render() {
       return ensureHistoryLoaded().then(() => render());
     }
     root.innerHTML = renderTimeline(historyData.records);
+    return null;
+  }
+  if (state.view === "story") {
+    if (!historyData) {
+      root.innerHTML = '<section class="status dashboard-empty" aria-busy="true"><p>Loading company timelines...</p></section>';
+      return ensureHistoryLoaded().then(() => render());
+    }
+    root.innerHTML = renderStoryMode(historyData.records);
     return null;
   }
   if (state.view === "watchlist") {
