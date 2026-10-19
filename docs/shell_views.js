@@ -4,7 +4,7 @@
  * DOM (see tests/browser/vnext_shell.test.js).
  */
 
-import { escapeHtml, formatMarketCap, formatNumber, humanDate, safeExternalUrl } from "./browser.js?v=20261017T162124Z";
+import { escapeHtml, formatMarketCap, formatNumber, humanDate, safeExternalUrl } from "./browser.js?v=20261019T132550Z";
 
 export const SEVERITY_ORDER = Object.freeze({
   "EXTREME CAUTION": 0,
@@ -155,10 +155,24 @@ export function filterCurrentRecords(records, filters) {
   const severity = filters.severity || "ALL";
   const accumulationOnly = filters.accumulationOnly === true;
   const exchange = filters.exchange || "ALL";
+  // Search matches the ticker or the company name, case-insensitively. The
+  // approved sandbox UI offered this; the MVP filter bar had lost it.
+  const search = String(filters.search || "").trim().toLowerCase();
   return records.filter((record) =>
     (severity === "ALL" || record.watch_severity === severity) &&
     (!accumulationOnly || record.accumulation_state === "DETECTED") &&
-    (exchange === "ALL" || record.exchange === exchange));
+    (exchange === "ALL" || record.exchange === exchange) &&
+    (!search ||
+      String(record.ticker || "").toLowerCase().includes(search) ||
+      String(record.company_name || "").toLowerCase().includes(search)));
+}
+
+/** True when any filter deviates from its default, so Reset can be offered. */
+export function hasActiveCurrentFilters(filters) {
+  return (filters.severity || "ALL") !== "ALL"
+    || filters.accumulationOnly === true
+    || (filters.exchange || "ALL") !== "ALL"
+    || String(filters.search || "").trim() !== "";
 }
 
 export function sortCurrentRecords(records, sort) {
@@ -211,14 +225,16 @@ export function renderCurrentList(allRecords, selectedInstrumentId, filters) {
   const qualityNote = !showQuality && allRecords[0]?.data_quality === "PARTIAL"
     ? '<p class="toolbar-note">All current signals currently show partial evidence coverage &mdash; see the selected instrument for specifics.</p>' : "";
   const exchangeFilter = exchanges.length > 1
-    ? `<label class="sort-control">Exchange <select data-exchange-filter><option value="ALL" ${(!filters.exchange || filters.exchange === "ALL") ? "selected" : ""}>All</option>${exchanges.map((exchange) => `<option value="${escapeHtml(exchange)}" ${filters.exchange === exchange ? "selected" : ""}>${escapeHtml(exchange)}</option>`).join("")}</select></label>` : "";
+    ? `<label class="sort-control">Exchange <select data-exchange-filter><option value="ALL" ${(!filters.exchange || filters.exchange === "ALL") ? "selected" : ""}>All markets</option>${exchanges.map((exchange) => `<option value="${escapeHtml(exchange)}" ${filters.exchange === exchange ? "selected" : ""}>${escapeHtml(exchange)}</option>`).join("")}</select></label>` : "";
   return `<section class="dashboard-panel" aria-labelledby="current-signals-heading">
     <div class="dashboard-heading"><div><p class="eyebrow">Current alert universe</p><h2 id="current-signals-heading">Current Research Alerts</h2></div><p class="dashboard-count">${visible.length} of ${allRecords.length} instruments</p></div>
     <div class="dashboard-controls" aria-label="Current signal filters">
+      <label class="research-company-search">Ticker or company <input type="search" data-dashboard-search value="${escapeHtml(filters.search || "")}" placeholder="Search alerts" aria-label="Search current Research alerts by ticker or company"></label>
       <div class="filter-group">${severityFilterBar(filters.severity || "ALL", "severity-filter")}</div>
       <label class="filter-toggle"><input type="checkbox" data-accumulation-filter ${filters.accumulationOnly ? "checked" : ""}> Accumulation</label>
       ${exchangeFilter}
       <label class="sort-control">Sort <select data-dashboard-sort><option value="newest" ${(filters.sort || "newest") === "newest" ? "selected" : ""}>Newest</option><option value="severity" ${filters.sort === "severity" ? "selected" : ""}>Severity</option></select></label>
+      ${hasActiveCurrentFilters(filters) ? '<button type="button" class="filter-reset" data-dashboard-reset>Reset</button>' : ""}
     </div>
     ${qualityNote}
     <div class="dashboard-list">${rows || '<p class="dashboard-empty">No instruments match these filters.</p>'}</div>

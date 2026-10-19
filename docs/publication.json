@@ -1,175 +1,53 @@
 {
   "acceptance_policy": "UAT-OPTIONAL-ENRICHMENT-DEGRADED/v1",
   "candidate_identity_evidence": {
-    "candidate_tree_sha256": "8fe9359663f559a5b6251c68048b534378cbed7eff36e6506938e3cf7fe91403",
-    "embedded_build_sha": "5b5de5552368869105770a06edef29c5e9f7a66b",
-    "execution_manifest_id": "uat-20261017T162124Z-1000",
+    "candidate_tree_sha256": "ec49953a548207264a395a45c5dd4a9dd9d6727b3e1561c2d957c48cf1dc63d8",
+    "embedded_build_sha": "e58bcb7b3cc67c417896a00c517e154aacee0d35",
+    "execution_manifest_id": "uat-20261019T132550Z-1000",
     "image_config_user": "10001:10001",
-    "image_id": "sha256:1b98d9c1fb33ea35d5ad7ff1748f6411e065c3402a64cf87f876f336f44b01d2",
+    "image_id": "sha256:314a56ac6d7262e7d1f7e4025fb06ce397f070cd63e5c40e055b3677061da2d8",
     "image_id_observed_on": "uatcd01",
+    "image_reference": "crashdash:sha-e58bcb7b",
     "product_validation_status": "VALIDATED"
   },
-  "canonical_run_id": "market-cycle-2026-10-19-1000",
-  "current_signal_count": 7,
-  "current_tickers": [
-    "ARS.L",
-    "BCG.L",
-    "CPH2.L",
-    "FARN.L",
-    "ONDO.L",
-    "RESI.L",
-    "VID.L"
-  ],
-  "deployment_token": "20261017T162124Z",
+  "canonical_run_id": "market-cycle-2026-10-20-1000",
+  "current_signal_count": 1,
+  "deployment_token": "20261019T132550Z",
   "environment": "UAT",
   "files": {
-    "CNAME": {
-      "origin": "preserved from previous publication",
-      "product_sha256": null,
-      "published_sha256": "d8651679d23ed4d2bf93705e0439cb5ec9094b6c83eae256daef33b430f57427"
-    },
-    "browser.js": {
-      "origin": "product tree",
-      "product_sha256": "88ba72ac5e059f8d13db1000d707b41bd129f6b418dbd1795893005cdfdf9c70",
-      "published_sha256": "88ba72ac5e059f8d13db1000d707b41bd129f6b418dbd1795893005cdfdf9c70"
-    },
-    "build.json": {
-      "origin": "generated at publication",
-      "product_sha256": null,
-      "published_sha256": "76f80e4ea407b5a0f50e75c48d40a5bfe9aa0a852f56d749453b52f5ee306b5d"
-    },
-    "current_story_viewer.js": {
-      "origin": "product tree",
-      "product_sha256": "b8e4062884697a365af1c2e6d372042a586765b95387972ac7ed9ea9d225ded0",
-      "published_sha256": "6cd06d9d4dfa9b2cbaf5b81a6c83c795e82eb045cb93e41f50abb7b1e2fac85c"
-    },
-    "data/beginner.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "fbf22d25be87cc15a45fd7050352b9944bd8db0046bb4d23e76c186e19c3e8ba"
-    },
-    "data/dashboard.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "1b3a7283b0956cda445a0788c266df4f20641d352f9f38538efdcced0bb240a2"
-    },
-    "data/history.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "93bc68416879cf030ce08e4e638b5df2bffb1b69b66998b065fc0ddc635fef10"
-    },
-    "data/instruments/ARS.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "ce4418d56974a34211ec2d7917e5b12b4e78abbe54c96c519d92b4b7c069c824"
-    },
-    "data/instruments/BCG.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "50c139939d31d8e34c7272a516fdfad38c5f0f14c33e973c6d0742fef5f7584a"
-    },
-    "data/instruments/CPH2.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "9e18f0b97e690e1a22854373c27a79af95ea57b5eee502d68935aae4e9843bb1"
-    },
-    "data/instruments/FARN.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "b1855456696961345ba644b2083abb09492a5b2d39edb4bc90edf20c8176fb20"
-    },
-    "data/instruments/ONDO.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "976257526cc089d85560de437823f32038768b2aaae1943f4719c5c47f1cbbca"
-    },
-    "data/instruments/RESI.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "041244e736339b282c9f17f5cf817ef860b120c0570b02c246458050b96df60b"
-    },
-    "data/instruments/VID.L.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "ff5650f0bb67e275fe14132b3930fb35bd582c0e004a1b9f65ddb7168388d791"
-    },
-    "data/pro.json": {
-      "origin": "product tree",
-      "product_sha256": null,
-      "published_sha256": "74c00f12887dfc4d83e53a79862a3d9bf539f5c607f629fb770701db6b785458"
-    },
-    "index.html": {
-      "origin": "product tree",
-      "product_sha256": "c28a703eb25317a1d63dc4a27bc049d387d5b26440b1281fc0a938218f58a444",
-      "published_sha256": "41aa47c18fd11c920e0b1883c7031ac8ed64b6c10b36e6cacc305c3464237595",
-      "transforms": [
-        "cache-invalidation shim",
-        "deployment-stamped entry module shell.js?v=20261017T162124Z"
-      ]
-    },
-    "learn_pages.js": {
-      "origin": "product tree",
-      "product_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa",
-      "published_sha256": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa"
-    },
-    "manifest.json": {
-      "origin": "product tree",
-      "product_sha256": "c682aba471a3dddca22f3ba6b89ec77c647a42ddb7e08d7deaee4ee746aefc8c",
-      "published_sha256": "c682aba471a3dddca22f3ba6b89ec77c647a42ddb7e08d7deaee4ee746aefc8c"
-    },
-    "preview-context.txt": {
-      "origin": "preserved from previous publication",
-      "product_sha256": null,
-      "published_sha256": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383"
-    },
-    "publication.json": {
-      "origin": "generated at publication",
-      "product_sha256": null,
-      "published_sha256": null
-    },
-    "real_contract.js": {
-      "origin": "product tree",
-      "product_sha256": "cc22404b8506b2cdd17d33c17d3c41e82db223ff932624a8015fd4ac62eae8c9",
-      "published_sha256": "2faa2eab28667cfada3fe0368d80ec8f51edaccf46977eee07f41ba756999753"
-    },
-    "shell.js": {
-      "origin": "product tree",
-      "product_sha256": "902612048e7ecf6f26c515f2e3b61463f9eff1147006df46e65f9720d4f65fd8",
-      "published_sha256": "4452a44a0d506c713629013cda17c7b81e2b3e828c8ab3a3c0a7f502ed65976e"
-    },
-    "shell_data.js": {
-      "origin": "product tree",
-      "product_sha256": "d708821b7ef4286f514e243e7eba4d34ca0b06329b8ff85681c0f3e5ef00937a",
-      "published_sha256": "4d9e0d7a1a32de72bc57104777fb479e48d91a4d374888173aeb302a95a03de8"
-    },
-    "shell_state.js": {
-      "origin": "product tree",
-      "product_sha256": "f7c81231b0cb29d2cc9a8101ddac6feaba9b71e65a22bc3c423477c31882d610",
-      "published_sha256": "f7c81231b0cb29d2cc9a8101ddac6feaba9b71e65a22bc3c423477c31882d610"
-    },
-    "shell_views.js": {
-      "origin": "product tree",
-      "product_sha256": "d48bd1723cf064b016215a0d75ee647756df47698ccd12f3fa851e72b698f730",
-      "published_sha256": "1ee83d3cb317a05308095f8fcb6167ba57de8897b4dc0ba626cae79a970e1f98"
-    },
-    "story_views.js": {
-      "origin": "product tree",
-      "product_sha256": "41b05f0033f8c1d054cf9671153745b949008112529946f8b2043d74190fa019",
-      "published_sha256": "be9e6a0c007f2c60657da976ae56cd80552db311bf97498ec75dc745a59bb47f"
-    }
+    "CNAME": "d8651679d23ed4d2bf93705e0439cb5ec9094b6c83eae256daef33b430f57427",
+    "browser.js": "88ba72ac5e059f8d13db1000d707b41bd129f6b418dbd1795893005cdfdf9c70",
+    "build.json": "ed0c3bcd274d481a1ec1cb8d062f976e52d8f27031099c8c996957e5029e0ad6",
+    "current_story_viewer.js": "7983cca481a0d30f0f667e8ea1cd0f940f3cdc5b3f6422890fffebdb4e0663f3",
+    "data/beginner.json": "a2095b02b8d7563c8e1aa9431b51cbb2ce7386655180d25e8cc5624e5e9cf84a",
+    "data/dashboard.json": "2a1c779824ce684435534d2b856db5cbe54817e6ab2cb532abbe15c2309871b5",
+    "data/history.json": "1c73449a95e8f144741e338710234082b9d12e4c295725f9c52b23832fdeb2fc",
+    "data/instruments/ARS.L.json": "a1207866822b3e2076a12ff39506df70fd191c0abab80004046d759c309c54cf",
+    "data/instruments/BCG.L.json": "5f3a809079f8e384b38fe88437d85dd8324ee6fdcf99970438819c1f912efeda",
+    "data/instruments/CPH2.L.json": "7f9b99f29011cdae4d91a78e38d64f330d53fe2ee5cb35570b48c54f729dc762",
+    "data/instruments/FARN.L.json": "a8bd6b53d4358128df3245e2c6932f39e247c0edb4230df45ade649889774bb0",
+    "data/instruments/ONDO.L.json": "03a0a8bfd4b863f4cf76fdb56e4506899793d3fffba24428e9464d7fee6e744d",
+    "data/instruments/RESI.L.json": "e8980f575da24ef63a580cc45b6b12aadf6742e038b000dd504c54724a397936",
+    "data/instruments/VID.L.json": "57dadff81d6bcf54878e9e2061ed44bd46a60949c52288bb863c435b520441a7",
+    "data/pro.json": "53e8a920040561dac06f104ed45fcf4f3de32a805f94560dc6daa9f0cc982214",
+    "index.html": "e744ad196949ea73fb03143407c4b0c4447d16ad1b2d4231bd58b6f61f196c0b",
+    "learn_pages.js": "ab9c7a9e66bad1f5e4154f8688b335ee25bf53d056290026ec026320f89c68fa",
+    "manifest.json": "aa4912a22a51e60ad9e51df920bf40c4876fb3cc06903b901dfe977b50e9a6b5",
+    "preview-context.txt": "2d57485302da4173ccd433edf858d37b72db8132c780dd315ab3b7f369f56383",
+    "real_contract.js": "e49313f33ae2b8f79f67af76a5f8e72e557dc551df8f7ab296a400a59462edd4",
+    "shell.js": "086c4facd1a5ee6d2d1a01b9b0687769e7d9f4d20dd4d766b71e41900a62696f",
+    "shell_data.js": "5cf53acace3e2079a3ca4c43633a1e0421937b29ae0bb97586a3de0958f3db0f",
+    "shell_state.js": "f7c81231b0cb29d2cc9a8101ddac6feaba9b71e65a22bc3c423477c31882d610",
+    "shell_views.js": "8c6781ffe5a5ea40b72e85d9ef99d98144097caec2d11c2ce35f6f6990a05917",
+    "story_views.js": "effbd8bcf6cde3357f57be8c2fce312a9f8381f45b15c12280b2791166247977"
   },
-  "overall_status": "DEGRADED_ACCEPTED",
-  "provider_outages": [
-    "sharechat"
-  ],
-  "publication_revision": 1,
-  "signal_count": 67,
-  "transforms": [
-    "flatten ../browser.js -> ./browser.js in shell.js, shell_views.js, shell_data.js, real_contract.js, story_views.js, current_story_viewer.js",
-    "cache-invalidation shim in index.html (proxies to the native fetch)",
-    "deployment-stamped entry module shell.js?v=20261017T162124Z",
-    "deployment-stamped module graph: every relative import stamped with ?v=20261017T162124Z",
-    "generated build.json and publication.json",
-    "CNAME and preview-context.txt preserved from previous publication"
-  ]
+  "generated_at": "2026-10-19T12:26:59.388150Z",
+  "product_build_generated_at": "2026-10-19T12:26:02.239801+00:00",
+  "provider_degradation": {
+    "note": "Provider HTTP 403 (Cloudflare challenge). Not fresh ingestion.",
+    "policy": "UAT-OPTIONAL-ENRICHMENT-DEGRADED/v1",
+    "rns": "BLOCKED_PROVIDER_EGRESS",
+    "sharechat": "BLOCKED_PROVIDER_EGRESS"
+  },
+  "published_at": "2026-10-19T12:26:59.388164Z"
 }

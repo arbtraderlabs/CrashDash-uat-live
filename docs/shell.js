@@ -5,10 +5,10 @@
  * shell_views.js as pure, independently testable functions.
  */
 
-import { escapeHtml, formatQuotePrice, humanDate, renderBeginner, renderPointEventContext, renderPro } from "./browser.js?v=20261017T162124Z";
-import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail, isInstrumentContractPayload } from "./shell_data.js?v=20261017T162124Z";
-import { parseState, serializeState } from "./shell_state.js?v=20261017T162124Z";
-import { renderHowToUseCrashDash, renderWhatToExpectCrashDash, renderLearnResources } from "./learn_pages.js?v=20261017T162124Z";
+import { escapeHtml, formatQuotePrice, humanDate, renderBeginner, renderPointEventContext, renderPro } from "./browser.js?v=20261019T132550Z";
+import { normaliseDashboard, normaliseHistory, normaliseRealBundle, normaliseInstrumentDetail, isInstrumentContractPayload } from "./shell_data.js?v=20261019T132550Z";
+import { parseState, serializeState } from "./shell_state.js?v=20261019T132550Z";
+import { renderHowToUseCrashDash, renderWhatToExpectCrashDash, renderLearnResources } from "./learn_pages.js?v=20261019T132550Z";
 import {
   filterHistoryRecords,
   paginate,
@@ -23,9 +23,9 @@ import {
   renderToday,
   selectTodayAlerts,
   summariseToday,
-} from "./shell_views.js?v=20261017T162124Z";
-import { buildCompanyNews, buildStories, buildStoryArtifact, quarterWindow, renderCompanyNews, renderCompanyStory, renderStoryHub } from "./story_views.js?v=20261017T162124Z";
-import { bindCurrentCatalystReplay, renderCurrentCatalystStory } from "./current_story_viewer.js?v=20261017T162124Z";
+} from "./shell_views.js?v=20261019T132550Z";
+import { buildCompanyNews, buildStories, buildStoryArtifact, quarterWindow, renderCompanyNews, renderCompanyStory, renderStoryHub } from "./story_views.js?v=20261019T132550Z";
+import { bindCurrentCatalystReplay, renderCurrentCatalystStory } from "./current_story_viewer.js?v=20261019T132550Z";
 
 function cleanChartEventText(value) {
   return String(value ?? "")
@@ -66,7 +66,7 @@ let selectedChartDate = null;
 let chartFilters = { severities: {}, accumulation: true, rns: true };
 let company30sIndex = 0;
 
-const currentFilters = { severity: "ALL", accumulationOnly: false, sort: "newest", exchange: "ALL" };
+const currentFilters = { severity: "ALL", accumulationOnly: false, sort: "newest", exchange: "ALL", search: "" };
 const historyFilters = { severity: "ALL", accumulationOnly: false, year: "ALL", search: "", view: "all", pageSize: PAGE_SIZE_OPTIONS[0], page: 1 };
 function prefersReducedMotion() {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -303,6 +303,22 @@ async function renderCurrentView() {
   });
   root.querySelector("[data-dashboard-sort]")?.addEventListener("change", (event) => {
     currentFilters.sort = event.target.value; renderCurrentView();
+  });
+  // Search filters without a round trip; focus is restored so typing is not
+  // interrupted by the re-render.
+  const searchInput = root.querySelector("[data-dashboard-search]");
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      const caret = searchInput.value.length;
+      currentFilters.search = searchInput.value;
+      renderCurrentView();
+      const next = root.querySelector("[data-dashboard-search]");
+      if (next) { next.focus(); next.setSelectionRange(caret, caret); }
+    });
+  }
+  root.querySelector("[data-dashboard-reset]")?.addEventListener("click", () => {
+    Object.assign(currentFilters, { severity: "ALL", accumulationOnly: false, sort: "newest", exchange: "ALL", search: "" });
+    renderCurrentView();
   });
   root.querySelectorAll("[data-mode-button]").forEach((button) => {
     button.addEventListener("click", () => navigate({ mode: button.dataset.modeButton }));
