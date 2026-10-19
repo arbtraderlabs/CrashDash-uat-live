@@ -1,1 +1,8 @@
-{"generated_at":"2026-10-19T12:26:02.239801+00:00","refreshed_at":"2026-10-19T12:26:02.239801+00:00","schema_version":"V1"}
+{
+  "generated_at": "2026-10-19T12:26:02.239801+00:00",
+  "image_id": "sha256:314a56ac6d7262e7d1f7e4025fb06ce397f070cd63e5c40e055b3677061da2d8",
+  "image_reference": "crashdash:sha-e58bcb7b",
+  "refreshed_at": "2026-10-19T12:26:02.239801+00:00",
+  "schema_version": "V1",
+  "source_sha": "e58bcb7b3cc67c417896a00c517e154aacee0d35"
+}
